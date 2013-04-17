@@ -24,11 +24,14 @@ public class BNUtils {
         
         // Init parentless set
         Set<N> orphans = new HashSet<>();
-        for( Map.Entry<N,Set<N>> node : graphMap.entrySet() )
-            if( node.getValue().isEmpty() )
-                orphans.add( node.getKey() );
-        
-        // Could optionally remove the orphans from the graph here and in the algo
+        {
+            Set<N> removeSet = new HashSet<>();
+            for( Map.Entry<N,Set<N>> node : graphMap.entrySet() )
+                if( node.getValue().isEmpty() )
+                    orphans.add( node.getKey() );
+            
+            graphMap.keySet().removeAll( removeSet );
+        }
         
         // The meat
         while( !orphans.isEmpty() ){
@@ -38,7 +41,8 @@ public class BNUtils {
             orphans.remove( node );
             result.add( node );
             
-            // Remove the edges from node
+            // Remove the node and its edges from the graph
+            graphMap.remove( node );
             for( Map.Entry<N,Set<N>> entry : graphMap.entrySet() ){
                 entry.getValue().remove( node );
                 if( entry.getValue().isEmpty() ){
