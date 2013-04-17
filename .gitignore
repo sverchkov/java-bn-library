@@ -1,0 +1,13 @@
+*.class
+
+# Packaging #
+*.jar
+*.war
+*.ear
+
+# NetBeans #
+/build/
+/dist/
+/nbproject/
+build.xml
+manifest.mf
