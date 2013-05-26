@@ -44,7 +44,7 @@ public class DataTableImpl<N,V> implements DataTable<N,V> {
         if( m != w )
             throw new IllegalArgumentException( "Tried to insert a row of length "+m+" into a table of width "+w+"." );
         
-        rows.add( new ArrayList( row ) );
+        rows.add( Collections.unmodifiableList( new ArrayList<>( row ) ) );
     }
 
     @Override
