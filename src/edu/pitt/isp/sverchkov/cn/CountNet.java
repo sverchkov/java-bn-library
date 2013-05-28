@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pitt.isp.sverchkov.bn;
+package edu.pitt.isp.sverchkov.cn;
 
 import edu.pitt.isp.sverchkov.graph.DAG;
 import java.util.Collection;
@@ -12,8 +12,7 @@ import java.util.Map;
  *
  * @author YUS24
  */
-public interface BayesNet<N,V> extends DAG<N> {
-    
+public interface CountNet<N,V> extends DAG<N> {
     /**
      * @param node
      * @return The values the node can take.
@@ -26,5 +25,5 @@ public interface BayesNet<N,V> extends DAG<N> {
      * @param conditions A node-value assignment of conditions as a map
      * @return P( outcomes | conditions );
      */
-    double probability( Map<N,V> outcomes, Map<N,V> conditions );
+    int probability( Map<N,V> outcomes, Map<N,V> conditions );
 }
