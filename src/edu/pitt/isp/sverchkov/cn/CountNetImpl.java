@@ -5,81 +5,49 @@
 package edu.pitt.isp.sverchkov.cn;
 
 import edu.pitt.isp.sverchkov.bn.BNTools;
+import edu.pitt.isp.sverchkov.data.ADTree;
 import edu.pitt.isp.sverchkov.data.DataTable;
 import edu.pitt.isp.sverchkov.graph.DAG;
 import edu.pitt.isp.sverchkov.graph.GraphTools;
+import edu.pitt.isp.sverchkov.graph.SimpleDAGImpl;
 import java.util.*;
 
 /**
- *
+ * AD-backed implementation of a count network (DAG + count queries)
  * @author YUS24
  */
 public class CountNetImpl<N,V> implements CountNet<N,V> {
     
-    private Map<N,Node> nodes;
+    private DAG<N> dag;
+    private ADTree<N,V> counts;
     
     public CountNetImpl( DataTable<N,V> data, DAG<N> structure ){
-        nodes = new LinkedHashMap<>();
-        for( N node : GraphTools.nodesInTopOrder(structure) ){
-            Node n = new Node( node, structure.parents( node ) );
-            //
-            nodes.put(node, n);
-        }
+        counts = new ADTree( data );
+        dag = new SimpleDAGImpl( structure );
     }
     
     @Override
     public Collection<V> values(N node) {
-        return nodes.get( node ).counts.keySet();
+        return counts.values(node);
     }
 
     @Override
-    public int count(Map<N, V> outcomes, Map<N, V> conditions) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Map<V, Integer> count(N node, Map<N, V> conditions) {
+        return counts.counts(node, conditions);
     }
 
     @Override
     public int size() {
-        return nodes.size();
+        return dag.size();
     }
 
     @Override
     public Collection<N> parents(N node) {
-        return nodes.get(node).parents;
+        return dag.parents(node);
     }
 
     @Override
     public Iterator<N> iterator() {
-        return nodes.keySet().iterator();
-    }
-    
-    private class Node {
-        final N name;
-        Set<N> parents;
-        Map<V,Map<Map<N,V>,Integer>> counts;        
-        
-        Node( N name, Collection<N> parents ){
-            this.name = name;
-            this.parents = new HashSet<>( parents );
-            counts = new HashMap();
-        }
-        
-        void add( Map<N,V> assignment ){
-            final int n = nodes.size();
-            for( int i=0; i<n; i++ ){
-                V value = assignment.get( name );
-                Map<Map<N,V>,Integer> countMap = counts.get( value );
-                Map<N,V> parentAssignment = new HashMap<>(assignment);
-                parentAssignment.keySet().retainAll(parents);
-                if( null == countMap ){
-                    countMap = new HashMap<>();
-                    counts.put( value, countMap );
-                }
-                Integer count = countMap.get( parentAssignment );
-                if( null == count || count == 0 )
-                    countMap.put( parentAssignment, 1 );
-                else
-                    countMap.put( parentAssignment, count+1 );
-            }
-        }
+        return dag.iterator();
     }
 }
