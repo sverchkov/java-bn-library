@@ -20,10 +20,10 @@ public interface CountNet<N,V> extends DAG<N> {
     Collection<V> values( N node );
     
     /**
-     * Returns the probability of the outcomes given the conditions
-     * @param outcomes A node-value assignment of outcomes as a map
+     * Returns the count distribution of a node N subject to the conditions
+     * @param node A node
      * @param conditions A node-value assignment of conditions as a map
-     * @return P( outcomes | conditions );
+     * @return Map: Value : Count( node = value, conditions )
      */
-    int count( Map<N,V> outcomes, Map<N,V> conditions );
+    Map<V, Integer> count( N node, Map<N,V> conditions );
 }
