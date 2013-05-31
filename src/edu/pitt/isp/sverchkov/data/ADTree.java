@@ -72,7 +72,7 @@ public class ADTree<A,V> extends ADTreeHelper{
         }
         
         // Build A-D tree
-        root = new CountNode( 0, array );
+        root = new CountNode( m, array );
     }
     
     public List<V> values( A attribute ){
