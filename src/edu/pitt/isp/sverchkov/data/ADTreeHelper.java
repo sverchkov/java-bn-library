@@ -22,7 +22,9 @@ class ADTreeHelper {
     
     protected int count( int[] assignment, CountNode ptr ){
         
-        for( int i = m; i >= 0 && ptr != null; i++ ){
+        if( null == ptr ) return 0;
+        
+        for( int i = ptr.attr; i >= 0 && ptr != null; i++ ){
             VaryNode vary = ptr.vary[i];
             if( assignment[i] >= 0 ){
                 if( assignment[i] == vary.mcv ){
@@ -30,7 +32,7 @@ class ADTreeHelper {
                     System.arraycopy(assignment, 0, a, 0, m);
                     a[i] = -1;
                     int count = count( a, ptr );
-                    for( int v = 0; v < vary.values.length; v++ )if( v != vary.mcv ){
+                    for( int v = 0; v < vary.values.length; v++ ) if( v != vary.mcv ){
                         a[i] = v;
                         count -= count( a, ptr );
                     }
@@ -42,12 +44,14 @@ class ADTreeHelper {
         
         return null == ptr ? 0 : ptr.count;
     }
-
+    
     protected class CountNode {
+        private final int attr;
         protected final int count;
         protected final VaryNode[] vary;
         
-        protected CountNode( final int attr, final int[][] array ){
+        protected CountNode( final int attribute, final int[][] array ){
+            attr = attribute;
             count = array.length;
             vary = new VaryNode[attr+1];
             for( int i=0; i<=attr; i++ )
