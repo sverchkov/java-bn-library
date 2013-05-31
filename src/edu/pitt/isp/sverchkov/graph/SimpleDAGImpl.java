@@ -13,6 +13,11 @@ import java.util.*;
 public class SimpleDAGImpl<N> implements DAG<N> {
     
     private final Map<N,Set<N>> parentMap = new HashMap<>();
+    
+    public SimpleDAGImpl( DAG<N> source ){
+        for( N node : source )
+            parentMap.put( node, new HashSet<>( source.parents(node) ) );
+    }
 
     @Override
     public int size() {
