@@ -92,24 +92,13 @@ public class ADTree<A,V> extends ADTreeHelper{
     
     public Map<V, Integer> counts( A attribute, Map<A,V> assignment ){
         
-        // Translation to integers
-        final int[] a = new int[m];
-        for( int i=0; i<m; i++ ){
-            V value = assignment.get( attributes.get(i) );
-            if( null != value )
-                a[i] = values.get(i).map.get( value );
-            else a[i] = -1;
-        }
-        final int attr = attributeLookup.get( attribute );
-        
-        // Computation
-        final int[] counts = counts( attr, a, root );
-        
-        // Translation out of integers
-        final List<V> vlist = values.get(attr).list;
+        final List<V> vlist = values.get( attributeLookup.get(attribute) ).list;
         final Map<V,Integer> result = new HashMap<>( vlist.size() );
-        for( int i=0; i<airities[attr]; i++ )
-            result.put( vlist.get(i), counts[i] );
+        for( V value : vlist ){
+            Map<A,V> a = new HashMap<>( assignment );
+            a.put( attribute, value );
+            result.put( value, count( a ) );
+        }
         
         return result;
     }
