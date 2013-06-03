@@ -12,9 +12,14 @@ import java.util.*;
  */
 public class SimpleDAGImpl<N> implements DAG<N> {
     
-    private final Map<N,Set<N>> parentMap = new HashMap<>();
+    private final Map<N,Set<N>> parentMap;
+    
+    public SimpleDAGImpl(){
+        parentMap = new HashMap<>();
+    }
     
     public SimpleDAGImpl( DAG<N> source ){
+        this();
         for( N node : source )
             parentMap.put( node, new HashSet<>( source.parents(node) ) );
     }
