@@ -25,5 +25,5 @@ public interface CountNet<N,V> extends DAG<N> {
      * @param conditions A node-value assignment of conditions as a map
      * @return Map: Value : Count( node = value, conditions )
      */
-    Map<V, Integer> count( N node, Map<N,V> conditions );
+    Map<V, Integer> counts( N node, Map<N,V> conditions );
 }

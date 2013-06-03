@@ -32,7 +32,7 @@ public class CountNetImpl<N,V> implements CountNet<N,V> {
     }
 
     @Override
-    public Map<V, Integer> count(N node, Map<N, V> conditions) {
+    public Map<V, Integer> counts(N node, Map<N, V> conditions) {
         return counts.counts(node, conditions);
     }
 
