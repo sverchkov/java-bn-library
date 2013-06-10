@@ -5,6 +5,11 @@
 package edu.pitt.isp.sverchkov.data;
 
 import java.util.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * An implementation of a static AD tree based on Moore & Lee 1998 (mostly)
@@ -102,17 +107,58 @@ public class ADTree<A,V> extends ADTreeHelper{
         
         return result;
     }
+
+    public Document toXML() throws ParserConfigurationException{
+        return toXML( DocumentBuilderFactory.newInstance().newDocumentBuilder() );
+    }
+    
+    public Document toXML( final DocumentBuilder builder ){
+        final Document doc = builder.newDocument();
+        
+        final Element docRoot = doc.createElement("adtree");
+        doc.appendChild( docRoot );
+        
+        if( null != root ){
+            final Element cNode = doc.createElement("count");
+            recursiveXML( doc, docRoot, root );
+            docRoot.appendChild( cNode );
+        }
+        
+        return doc;
+    }
+    
+    private void recursiveXML(final Document doc, final Element cNode, final CountNode node) {
+        cNode.setAttribute("count", Integer.toString( node.count ) );
+        for( int i=0; i<node.vary.length; i++ ){
+            final Element vNode = doc.createElement("vary");
+            vNode.setAttribute("attribute", attributes.get(i).toString() );
+            cNode.appendChild(vNode);
+            for( int j=0; j<node.vary[i].values.length; j++ ){
+                final Element e;
+                if( j == node.vary[i].mcv )
+                    e = doc.createElement("mcv");
+                else if( null == node.vary[i].values[j] )
+                    e = doc.createElement("null");
+                else{
+                    e = doc.createElement("count");
+                    recursiveXML( doc, e, node.vary[i].values[j] );
+                }
+                e.setAttribute("value", values.get(i).list.get(j).toString() );
+                cNode.appendChild(e);
+            }
+        }
+    }
     
     private class VHelper{
         private final List<V> list;
         private final Map<V,Integer> map;
         private VHelper(){
-            list = new ArrayList();
-            map = new HashMap();
+            list = new ArrayList<>();
+            map = new HashMap<>();
         }
         private VHelper( List<V> list, Map<V,Integer> map ){
             this.list = list;
             this.map = map;
         }
-    }
+    }    
 }
