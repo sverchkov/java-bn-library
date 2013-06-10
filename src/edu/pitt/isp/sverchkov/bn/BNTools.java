@@ -9,6 +9,11 @@ import edu.pitt.isp.sverchkov.data.DataTableImpl;
 import edu.pitt.isp.sverchkov.graph.DAG;
 import edu.pitt.isp.sverchkov.graph.GraphTools;
 import java.util.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -54,5 +59,29 @@ public class BNTools {
         }
         
         return null;
+    }
+    
+    public static <N> Document toXML( final DAG<N> net ) throws ParserConfigurationException{
+        return toXML( net, DocumentBuilderFactory.newInstance().newDocumentBuilder() );
+    }
+    
+    public static <N> Document toXML( final DAG<N> net, final DocumentBuilder builder ){
+        final Document doc = builder.newDocument();
+        
+        final Element docRoot = doc.createElement("dag");
+        doc.appendChild( docRoot );
+        
+        for( N node : net ){
+            final Element dNode = doc.createElement("node");
+            dNode.setAttribute( "name", node.toString() );
+            docRoot.appendChild( dNode );
+            for( N parent : net.parents(node) ){
+                final Element p = doc.createElement("parent");
+                p.setAttribute( "name", parent.toString() );
+                dNode.appendChild( p );
+            }
+        }
+        
+        return doc;
     }
 }
