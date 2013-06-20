@@ -4,6 +4,7 @@
  */
 package edu.pitt.isp.sverchkov.data;
 
+import java.io.Serializable;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,7 +20,7 @@ import org.w3c.dom.Element;
  * ... not that that difference is visible in the API.
  * @author user
  */
-public class ADTree<A,V> extends ADTreeHelper{
+public class ADTree<A,V> extends ADTreeHelper implements Serializable {
     
     private final Map<A,Integer> attributeLookup;
     private final List<A> attributes;
@@ -79,7 +80,7 @@ public class ADTree<A,V> extends ADTreeHelper{
         // Build A-D tree
         root = new CountNode( m, array );
     }
-    
+
     public List<V> values( A attribute ){
         return values.get( attributeLookup.get( attribute ) ).list;
     }
@@ -120,7 +121,7 @@ public class ADTree<A,V> extends ADTreeHelper{
         
         if( null != root ){
             final Element cNode = doc.createElement("count");
-            recursiveXML( doc, docRoot, root );
+            recursiveXML( doc, cNode, root );
             docRoot.appendChild( cNode );
         }
         
@@ -144,12 +145,12 @@ public class ADTree<A,V> extends ADTreeHelper{
                     recursiveXML( doc, e, node.vary[i].values[j] );
                 }
                 e.setAttribute("value", values.get(i).list.get(j).toString() );
-                cNode.appendChild(e);
+                vNode.appendChild(e);
             }
         }
     }
     
-    private class VHelper{
+    private class VHelper implements Serializable {
         private final List<V> list;
         private final Map<V,Integer> map;
         private VHelper(){

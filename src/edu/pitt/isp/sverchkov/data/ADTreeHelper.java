@@ -4,6 +4,7 @@
  */
 package edu.pitt.isp.sverchkov.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  *
  * @author user
  */
-class ADTreeHelper {
+class ADTreeHelper implements Serializable {
+    
     protected final int m; // The number of attributes
     protected final int[] airities;
     
@@ -45,7 +47,7 @@ class ADTreeHelper {
         return null == ptr ? 0 : ptr.count;
     }
     
-    protected class CountNode {
+    protected class CountNode implements Serializable {
         private final int attr;
         protected final int count;
         protected final VaryNode[] vary;
@@ -59,7 +61,7 @@ class ADTreeHelper {
         }
     }
     
-    protected class VaryNode{
+    protected class VaryNode implements Serializable {
         protected final CountNode[] values;
         protected int mcv = -1;
         
