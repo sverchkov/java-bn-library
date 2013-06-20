@@ -24,7 +24,7 @@ class ADTreeHelper {
         
         if( null == ptr ) return 0;
         
-        for( int i = ptr.attr; i >= 0 && ptr != null; i++ ){
+        for( int i = ptr.attr-1; i >= 0 && ptr != null; i-- ){
             VaryNode vary = ptr.vary[i];
             if( assignment[i] >= 0 ){
                 if( assignment[i] == vary.mcv ){
@@ -53,8 +53,8 @@ class ADTreeHelper {
         protected CountNode( final int attribute, final int[][] array ){
             attr = attribute;
             count = array.length;
-            vary = new VaryNode[attr+1];
-            for( int i=0; i<=attr; i++ )
+            vary = new VaryNode[attr];
+            for( int i=0; i<attr; i++ )
                 vary[i] = new VaryNode( i, array );
         }
     }
@@ -93,7 +93,7 @@ class ADTreeHelper {
                     for( int index : indexes )
                         childArray[j++] = array[index];
                     
-                    values[i] = new CountNode( attr-1, childArray );
+                    values[i] = new CountNode( attr, childArray );
                 }
             }
         }
