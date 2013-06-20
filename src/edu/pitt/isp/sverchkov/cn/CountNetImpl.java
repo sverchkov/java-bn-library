@@ -4,11 +4,9 @@
  */
 package edu.pitt.isp.sverchkov.cn;
 
-import edu.pitt.isp.sverchkov.bn.BNTools;
 import edu.pitt.isp.sverchkov.data.ADTree;
 import edu.pitt.isp.sverchkov.data.DataTable;
 import edu.pitt.isp.sverchkov.graph.DAG;
-import edu.pitt.isp.sverchkov.graph.GraphTools;
 import edu.pitt.isp.sverchkov.graph.SimpleDAGImpl;
 import java.util.*;
 
@@ -20,6 +18,11 @@ public class CountNetImpl<N,V> implements CountNet<N,V> {
     
     private DAG<N> dag;
     private ADTree<N,V> counts;
+    
+    public CountNetImpl( ADTree<N,V> counts, DAG<N> structure ){
+        this.counts = counts;
+        dag = structure;
+    }
     
     public CountNetImpl( DataTable<N,V> data, DAG<N> structure ){
         counts = new ADTree( data );
