@@ -64,6 +64,7 @@ public class ADTree<A,V> extends ADTreeHelper implements Serializable {
                     }
                     array[r][i] = vmap.get( value );
                 }
+                ++r;
             }
             
             // Set immutable
