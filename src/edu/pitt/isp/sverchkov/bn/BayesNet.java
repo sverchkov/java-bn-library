@@ -36,5 +36,5 @@ public interface BayesNet<N,V> extends DAG<N> {
      * @return P( nodes | conditions ) as a map of lists to doubles where each
      * list is a unique possible assignment of 'nodes' to values
      */
-    Map<? extends List<? extends V>, Double> probabilities( List<? extends N> nodes, Map<? extends N, ? extends V> conditions);
+    Map<List<V>, Double> probabilities( List<? extends N> nodes, Map<? extends N, ? extends V> conditions);
 }
