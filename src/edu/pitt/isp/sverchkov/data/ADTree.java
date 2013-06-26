@@ -83,7 +83,9 @@ public class ADTree<A,V> extends ADTreeHelper implements Serializable {
     }
 
     public List<V> values( A attribute ){
-        return values.get( attributeLookup.get( attribute ) ).list;
+        int index = Objects.requireNonNull( attributeLookup.get( attribute ),
+                "Attribute "+attribute.toString()+" not found.");            
+        return values.get( index ).list;
     }
     
     public int count( Map<A,V> assignment ){
