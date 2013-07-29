@@ -4,6 +4,7 @@
  */
 package edu.pitt.isp.sverchkov.cn;
 
+import edu.pitt.isp.sverchkov.combinatorics.Assignments;
 import edu.pitt.isp.sverchkov.data.ADTree;
 import edu.pitt.isp.sverchkov.data.DataTable;
 import edu.pitt.isp.sverchkov.graph.DAG;
@@ -18,6 +19,8 @@ public class CountNetImpl<N,V> implements CountNet<N,V> {
     
     private DAG<N> dag;
     private ADTree<N,V> counts;
+    // Cache parent assignment objects
+    private final Map<N,Assignments<N,V>> assignments = new HashMap<>();
     
     public CountNetImpl( ADTree<N,V> counts, DAG<N> structure ){
         this.counts = counts;
@@ -52,5 +55,17 @@ public class CountNetImpl<N,V> implements CountNet<N,V> {
     @Override
     public Iterator<N> iterator() {
         return dag.iterator();
+    }
+
+    @Override
+    public Assignments<N, V> parentAssignment(N node) {
+        Assignments<N,V> result = assignments.get(node);
+        if( null == result ){
+            Map<N,Collection<V>> parentMap = new HashMap<>();
+            for( N parent : parents( node ) )
+                parentMap.put( parent, values(parent) );
+            result = new Assignments<>( parentMap );
+        }
+        return result;
     }
 }
