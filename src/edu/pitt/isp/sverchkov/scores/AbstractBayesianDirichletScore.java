@@ -38,7 +38,7 @@ public abstract class AbstractBayesianDirichletScore implements StructureScore {
     @Override
     public <Variable,Value> Map<Map<Variable,Value>,Double> scoreParentAssignments( CountNet<Variable,Value> net, Variable v ){
         Map<Map<Variable,Value>,Double> results = new HashMap<>();
-        for( Map<Variable,Value> parentAssignment : net.parentAssignment(v) ){
+        for( Map<Variable,Value> parentAssignment : net.parentAssignments(v) ){
             
             double alpha = 0;
             int count = 0;

@@ -22,5 +22,5 @@ public interface ValueDAG<Node,Value> extends DAG<Node> {
      * @param node This node.
      * @return The iterator over assignments of this node's parents to values.
      */
-    Assignments<Node,Value> parentAssignment( Node node );
+    Assignments<Node,Value> parentAssignments( Node node );
 }

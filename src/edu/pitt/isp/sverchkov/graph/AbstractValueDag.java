@@ -18,7 +18,7 @@ public abstract class AbstractValueDAG<Node,Value> implements ValueDAG<Node,Valu
     protected Map<Node,Assignments<Node,Value>> assignments = new HashMap<>();
     
     @Override
-    public Assignments<Node, Value> parentAssignment(Node n) {
+    public Assignments<Node, Value> parentAssignments(Node n) {
         Assignments<Node,Value> result = assignments.get(n);
         if( null == result ){
             Map<Node,Collection<Value>> parentMap = new HashMap<>();
