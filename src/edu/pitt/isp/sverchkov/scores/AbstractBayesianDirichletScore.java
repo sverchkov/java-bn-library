@@ -5,9 +5,7 @@
 package edu.pitt.isp.sverchkov.scores;
 
 import edu.pitt.isp.sverchkov.cn.CountNet;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.commons.math3.special.Gamma;
 
