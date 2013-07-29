@@ -4,8 +4,7 @@
  */
 package edu.pitt.isp.sverchkov.bn;
 
-import edu.pitt.isp.sverchkov.graph.DAG;
-import java.util.Collection;
+import edu.pitt.isp.sverchkov.graph.ValueDAG;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +12,8 @@ import java.util.Map;
  *
  * @author YUS24
  */
-public interface BayesNet<N,V> extends DAG<N> {
-    
-    /**
-     * @param node
-     * @return The values the node can take.
-     */
-    Collection<V> values( N node );
-    
+public interface BayesNet<N,V> extends ValueDAG<N,V> {
+        
     /**
      * Returns the probability of the outcomes given the conditions
      * @param outcomes A node-value assignment of outcomes as a map
