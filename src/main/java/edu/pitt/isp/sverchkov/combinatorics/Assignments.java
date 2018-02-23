@@ -98,7 +98,7 @@ public class Assignments<K,V> implements Iterable<Map<K,V>> {
                 else
                     indeces[bit] = 0;
 
-            // Check if an overflow occured
+            // Check if an overflow occurred
             valid = bit < indeces.length;
             return result;
         }
