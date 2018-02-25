@@ -20,7 +20,7 @@ public interface BayesNet<N,V> extends ValueDAG<N,V> {
      * @param conditions A node-value assignment of conditions as a map
      * @return P( outcomes | conditions );
      */
-    double probability( Map<N,V> outcomes, Map<N,V> conditions );
+    double probability( Map<? extends N,? extends V> outcomes, Map<? extends N,? extends V> conditions );
     
     /**
      * Returns the distribution P( nodes | conditions )
