@@ -1,5 +1,12 @@
 package edu.pitt.isp.sverchkov.smile;
 
+import smile.Network;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 public class YeYeTests {
 
     public static void testYuriyCode1(){
