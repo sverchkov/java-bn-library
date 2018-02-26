@@ -11,3 +11,8 @@
 /nbproject/
 build.xml
 manifest.mf
+
+# IntelliJ #
+.gradle
+.idea
+*.iml
